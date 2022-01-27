@@ -25,6 +25,7 @@ git clone https://github.com/shineyruan/ros2_playground.git
 
 Build the current repo with [Colcon](https://colcon.readthedocs.io/en/released/index.html)
 ```bash
+cd ~/ros2_starter_ws
 colcon build
 ```
 
