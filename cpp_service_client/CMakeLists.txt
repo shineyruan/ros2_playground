@@ -19,7 +19,26 @@ endif()
 find_package(ament_cmake REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(example_interfaces REQUIRED)
+
+# generage ROS 2 interfaces
+find_package(rosidl_default_generators REQUIRED)
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "srv/AddThreeInts.srv"
+)
+
+# Building
+add_executable(client src/cpp_client_node.cpp)
+ament_target_dependencies(client rclcpp example_interfaces)
+# NOTE: must add this line if using custom message in the same package of node
+rosidl_target_interfaces(client ${PROJECT_NAME} "rosidl_typesupport_cpp")
+
+# Install 
+install(TARGETS
+  client
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
